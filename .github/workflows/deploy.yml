@@ -1,0 +1,30 @@
+name: Deploy to Kubernetes
+
+on:
+  workflow_call:
+    secrets:
+      KUBERNETES_SECRET:
+        required: true
+jobs:
+  deploy:
+    name: Deploy
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: https://5a645f86-b2aa-4b69-8816-bdd8dfe3655e.sks-ch-gva-2.exo.io:443
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v1
+        with:
+          namespace: default
+          manifests: |
+            deployment.yaml
+          images: |
+            dahny/${{ github.event.repository.name }}:${{ github.sha }}
+
