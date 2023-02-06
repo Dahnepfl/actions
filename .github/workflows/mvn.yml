@@ -2,7 +2,11 @@ name: Java CI
 
 on:
   workflow_call:
-
+    secrets:
+      DOCKER_HUB_SECRET:
+        required:
+      KUBERNETES_SECRET:
+        required: true
 jobs:
   build:
 
