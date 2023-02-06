@@ -4,7 +4,7 @@ on:
   workflow_call:
     secrets:
       DOCKER_HUB_SECRET:
-        required:
+        required: true
       KUBERNETES_SECRET:
         required: true
 jobs:
