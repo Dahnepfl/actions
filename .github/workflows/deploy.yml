@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     name: Deploy
-    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - name: Set the Kubernetes context
@@ -27,4 +26,3 @@ jobs:
             deployment.yaml
           images: |
             dahny/${{ github.event.repository.name }}:${{ github.sha }}
-
