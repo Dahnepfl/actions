@@ -19,7 +19,4 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
-      - name: Run my docker push action
-        uses: Dahnepfl/actions/.github/actions/docker-push.yml
-        with:
-          secrets: ${{ secrets.DOCKER_HUB_SECRET }}
+    
