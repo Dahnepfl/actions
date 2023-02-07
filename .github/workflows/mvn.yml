@@ -23,3 +23,4 @@ jobs:
         uses: Dahnepfl/actions/.github/actions/docker-push@main
         with:
           DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          
