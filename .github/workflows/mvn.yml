@@ -22,4 +22,4 @@ jobs:
       - name: Run my docker push action
         uses: Dahnepfl/actions/.github/actions/docker-push@main
         with:
-          secrets: ${{ secrets.DOCKER_HUB_SECRET }}
+          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
