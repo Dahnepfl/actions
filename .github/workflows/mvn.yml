@@ -20,6 +20,6 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
 
-      - uses: docker-push.yml
+      - uses: Dahnepfl/actions/.github/workflows/docker-push.yml@main
         with:
           secret: ${{ DOCKER_HUB_SECRET }}
