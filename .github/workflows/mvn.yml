@@ -12,7 +12,7 @@ jobs:
 
     steps:
 
-      - uses: Dahnepfl/actions/.github/workflows/docker-push.yml@main
+      - uses: Dahnepfl/actions/.github/actions/docker-push.yml@main
         with:
           secrets: ${{ DOCKER_HUB_SECRET }}
       - uses: actions/checkout@v3
