@@ -1,11 +1,11 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+  workflow_call:
+    secrets:
+      DOCKER_HUB_SECRET:
+        required: true
+        
 jobs:
   build:
     name: NPM build
