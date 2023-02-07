@@ -20,6 +20,6 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
       - name: Run my docker push action
-        uses: Dahnepfl/actions/.github/actions/docker-push.yml@v1
+        uses: docker-push.yml@v1
         with:
           secrets: ${{ secrets.DOCKER_HUB_SECRET }}
