@@ -4,8 +4,8 @@ on:
   workflow_call:
     inputs:
       namespace:
-        required: none
         type: string
+        required: false
         default: default
     secrets:
       KUBERNETES_SECRET:
