@@ -2,6 +2,11 @@ name: Deploy to Kubernetes
 
 on:
   workflow_call:
+    inputs:
+      namespace:
+        required: none
+        type: string
+        default: default
     secrets:
       KUBERNETES_SECRET:
         required: true
@@ -21,7 +26,7 @@ jobs:
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
-          namespace: default
+          namespace: ${{ inputs.namespace }}
           manifests: |
             deployment.yaml
           images: |
