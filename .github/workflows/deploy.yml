@@ -7,6 +7,10 @@ on:
         type: string
         required: false
         default: default
+      k8s-url:
+        type: string
+        required: false
+        default: https://99075f78-5058-4466-baab-f7572ff8d4bb.sks-ch-gva-2.exo.io
     secrets:
       KUBERNETES_SECRET:
         required: true
@@ -19,7 +23,7 @@ jobs:
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
-          k8s-url: https://5a645f86-b2aa-4b69-8816-bdd8dfe3655e.sks-ch-gva-2.exo.io:443
+          k8s-url: ${{ inputs.k8s-url }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
       - name: Checkout source code
         uses: actions/checkout@v3
