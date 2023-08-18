@@ -10,7 +10,7 @@ on:
       k8s-url:
         type: string
         required: false
-        default: https://99075f78-5058-4466-baab-f7572ff8d4bb.sks-ch-gva-2.exo.io
+        default: https://d00acea6-543d-49e3-a738-44314e18605a.sks-ch-gva-2.exo.io
     secrets:
       KUBERNETES_SECRET:
         required: true
