@@ -20,11 +20,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build --prod
-      - run: gzip -k dist/art-frontend/*.js
-      - run: gzip -k dist/art-frontend/*.css
-      - run: gzip -k dist/art-frontend/*.html
-      - run: ls
-      - run: ls dist/art-frontend
+      - run: gzip -k dist/*/*.js
+      - run: gzip -k dist/*/*.css
+      - run: gzip -k dist/*/*.html
       - id: npm-version
         run: |
           npm pkg get version > out && sed -i 's/"//g' out
