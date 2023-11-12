@@ -6,7 +6,7 @@ on:
       javaVersion:
         type: string
         required: false
-        default: '11'
+        default: '17'
     secrets:
       DOCKER_HUB_SECRET:
         required: true
