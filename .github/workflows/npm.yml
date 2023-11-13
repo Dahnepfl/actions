@@ -24,10 +24,11 @@ jobs:
           echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
       - id: npm-version1
         run: |
-          echo $GITHUB_OUTPUT
+          cat out
       - id: npm-version2
         run: |
-          npm --no-git-tag-version version ${GITHUB_OUTPUT::-2}.$RANDOM
+          VERSION=`cat out`
+          npm --no-git-tag-version version ${VERSION::-2}.$RANDOM
       - run: npm ci
       - run: npm run build --prod
       - run: gzip -k dist/*/*.js
