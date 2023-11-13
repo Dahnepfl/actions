@@ -22,7 +22,11 @@ jobs:
         run: |
           npm pkg get version > out && sed -i 's/"//g' out
           echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
+      - id: npm-version1
+        run: |
           echo $GITHUB_OUTPUT
+      - id: npm-version2
+        run: |
           npm --no-git-tag-version version ${GITHUB_OUTPUT::-2}.$RANDOM
       - run: npm ci
       - run: npm run build --prod
