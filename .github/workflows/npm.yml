@@ -18,17 +18,17 @@ jobs:
         with:
           node-version: 18.10.0
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build --prod
-      - run: gzip -k dist/*/*.js
-      - run: gzip -k dist/*/*.css
-      - run: gzip -k dist/*/*.html
       - id: npm-version
         run: |
           npm pkg get version > out && sed -i 's/"//g' out
           echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
           npm --no-git-tag-version version ${GITHUB_OUTPUT::-2}.$RANDOM
+      - run: npm ci
+      - run: npm run build --prod
+      - run: gzip -k dist/*/*.js
+      - run: gzip -k dist/*/*.css
+      - run: gzip -k dist/*/*.html
       - name: Run my docker push action
         uses: Dahnepfl/actions/.github/actions/docker-push@main
         with:
