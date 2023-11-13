@@ -27,6 +27,8 @@ jobs:
         run: |
           npm pkg get version > out && sed -i 's/"//g' out
           echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+          npm --no-git-tag-version version ${GITHUB_OUTPUT::-2}.$RANDOM
       - name: Run my docker push action
         uses: Dahnepfl/actions/.github/actions/docker-push@main
         with:
