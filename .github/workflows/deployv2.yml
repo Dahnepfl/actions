@@ -34,6 +34,6 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           namespace: ${{ inputs.namespace }}
-          manifests: ${{ inputs.manifest }}
+          manifests: ${{ inputs.manifests }}
           images: |
             dahny/${{ github.event.repository.name }}:${{ github.sha }}
