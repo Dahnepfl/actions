@@ -28,9 +28,9 @@ jobs:
           npm --no-git-tag-version version ${VERSION::-2}.$RANDOM
       - run: npm ci
       - run: npm run build --prod
-      - run: gzip -k dist/*/*.js
-      - run: gzip -k dist/*/*.css
-      - run: gzip -k dist/*/*.html
+      - run: gzip -k dist/*/*.js || gzip -k dist/*/*/*.js
+      - run: gzip -k dist/*/*.css || gzip -k dist/*/*/*.css
+      - run: gzip -k dist/*/*.html || gzip -k dist/*/*/*.html
       - name: Run my docker push action
         uses: Dahnepfl/actions/.github/actions/docker-push@main
         with:
