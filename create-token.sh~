@@ -1,0 +1,7 @@
+kubectl delete serviceaccount github-actions
+kubectl create serviceaccount github-actions
+kubectl delete clusterrolebinding continuous-deployment
+kubectl create clusterrolebinding continuous-deployment --clusterrole=continuous-deployment  --serviceaccount=default:github-actions
+
+kubectl get serviceaccounts github-actions -o yaml
+
