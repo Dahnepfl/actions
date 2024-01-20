@@ -31,17 +31,19 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      - name: CD
-        run: cd ${{ inputs.manifests }}
       - name: Install kustomize
+        working-directory: ${{ inputs.manifests }}
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: debug
+        working-directory: ${{ inputs.manifests }}
         run: ls && pwd
       - name: edit
+        working-directory: ${{ inputs.manifests }}
         run: |
           ./kustomize edit set namespace ${{ inputs.namespace }}
           ./kustomize edit set image dahny/${{ github.event.repository.name }}=dahny/${{ github.event.repository.name }}:${{ github.sha }}
           cat kustomization.yaml
       - name: Apply Kustomize configuration
+        working-directory: ${{ inputs.manifests }}
         run: ./kustomize build . | kubectl apply -f -
