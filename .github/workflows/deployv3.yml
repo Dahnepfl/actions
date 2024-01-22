@@ -23,13 +23,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set the Kubernetes context
-        uses: azure/k8s-set-context@v2
+        uses: azure/k8s-set-context@v3
         with:
           method: service-account
           k8s-url: ${{ inputs.k8s-url }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install kustomize
         working-directory: ${{ inputs.manifests }}
