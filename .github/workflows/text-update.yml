@@ -7,7 +7,7 @@ on:
         description: filename
       data:
         type: string
-        data: data
+        description: data
 jobs:
   update-asset:
     runs-on: ubuntu-latest
