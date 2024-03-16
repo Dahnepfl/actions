@@ -1,0 +1,32 @@
+name: Update text
+on:
+  workflow_call:
+    inputs:
+      filename:
+        type: string
+        description: filename
+      data:
+        type: string
+        data: data
+jobs:
+  update-asset:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - name: update file
+        run: python3 -c "import sys; from urllib.parse import unquote; print(unquote(\"${{ inputs.data }}\".replace('+', ' ')));"  | python -m json.tool > ./src/assets/i18n/${{ inputs.filename }}
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "dahn.youssefi@gmail.com"
+          
+          git add -A
+          git commit -m "update text ${{ inputs.filename }}" || true
+          git push || true
