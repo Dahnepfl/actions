@@ -1,11 +1,14 @@
 name: Push to Docker Hub
+description: build and push docker image to docker hub
 
 inputs:
   DOCKER_HUB_SECRET:
     required: true
+    description: docker hub secret
   TAG:
     required: false
     default: latest
+    description: image tag
 
 runs:
   using: "composite"

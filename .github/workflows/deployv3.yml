@@ -31,14 +31,10 @@ jobs:
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
       - name: Checkout source code
         uses: actions/checkout@v4
-
       - name: Install kustomize
         working-directory: ${{ inputs.manifests }}
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: debug
-        working-directory: ${{ inputs.manifests }}
-        run: ls && pwd
       - name: edit
         working-directory: ${{ inputs.manifests }}
         run: |
