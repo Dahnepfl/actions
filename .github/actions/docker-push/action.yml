@@ -3,6 +3,9 @@ name: Push to Docker Hub
 inputs:
   DOCKER_HUB_SECRET:
     required: true
+  TAG:
+    required: false
+    default: latest
 
 runs:
   using: "composite"
@@ -23,5 +26,5 @@ runs:
         context: .
         push: true
         tags: |
-          dahny/${{ github.event.repository.name }}:latest
+          dahny/${{ github.event.repository.name }}:${{ inputs.TAG }}
           dahny/${{ github.event.repository.name }}:${{ github.sha }}
