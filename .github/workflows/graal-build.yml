@@ -15,7 +15,7 @@ on:
         required: true
 jobs:
   build:
-    name: Maven build
+    name: Graal VM build
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
