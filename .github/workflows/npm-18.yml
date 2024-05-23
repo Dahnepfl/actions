@@ -1,0 +1,43 @@
+name: Node.js CI Node 18.17
+
+on:
+  workflow_call:
+    inputs:
+      TAG:
+        type: string
+        required: false
+        default: latest
+    secrets:
+      DOCKER_HUB_SECRET:
+        required: true
+        
+jobs:
+  build:
+    name: NPM build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.19.0
+          cache: 'npm'
+      - id: npm-version
+        run: |
+          npm pkg get version > out && sed -i 's/"//g' out
+          echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
+      - id: change-version
+        run: |
+          VERSION=`cat out`
+          npm --no-git-tag-version version ${VERSION::-2}.$RANDOM
+      - run: npm ci
+      - run: npm run build --omit=dev
+      - run: gzip -k dist/*/*.js || gzip -k dist/*/*/*.js
+      - run: gzip -k dist/*/*.css || gzip -k dist/*/*/*.css
+      - run: gzip -k dist/*/*.html || gzip -k dist/*/*/*.html
+      - name: Run my docker push action
+        uses: Dahnepfl/actions/.github/actions/docker-push@main
+        with:
+          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          TAG: ${{ inputs.TAG }}
