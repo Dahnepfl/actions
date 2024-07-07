@@ -10,6 +10,8 @@ on:
     secrets:
       DOCKER_HUB_SECRET:
         required: true
+      GITHUB_SECRET:
+        required: false
         
 jobs:
   build:
@@ -20,6 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+          token: ${{ secrets.GITHUB_SECRET || github.token }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
