@@ -1,0 +1,25 @@
+name: Docker build and push
+
+on:
+  workflow_call:
+    inputs:
+      TAG:
+        required: false
+        default: latest
+        type: string
+        description: image tag
+    secrets:
+      DOCKER_HUB_SECRET:
+        required: true
+jobs:
+  build:
+    name: Docker build and push
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run my docker push action
+        uses: Dahnepfl/actions/.github/actions/docker-push@main
+        with:
+          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          TAG: ${{ inputs.TAG }}
