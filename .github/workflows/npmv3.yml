@@ -26,7 +26,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: 18.19.1
+          node-version: 22.0.0
           cache: 'npm'
       - id: npm-version
         run: |
