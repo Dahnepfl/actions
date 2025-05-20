@@ -32,10 +32,9 @@ jobs:
         run: |
           npm pkg get version > out && sed -i 's/"//g' out
           echo "VERSION=$(cat out)" >> $GITHUB_OUTPUT
-      - id: change-version
+      - id: change-version  # #npm --no-git-tag-version version ${VERSION::-2}.$RANDOM
         run: |
           VERSION=`cat out`
-          npm --no-git-tag-version version ${VERSION::-2}.$RANDOM
       - run: npm ci
       - run: npm run build --omit=dev
       - run: gzip -k dist/*/*.js || gzip -k dist/*/*/*.js
