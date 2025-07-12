@@ -1,0 +1,52 @@
+name: Build and Push Angular SSR (Node 24)
+
+on:
+  workflow_call:
+    inputs:
+      TAG:
+        type: string
+        required: false
+        default: latest
+    secrets:
+      DOCKER_HUB_SECRET:
+        required: true
+      MY_GITHUB_TOKEN:
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Angular SSR and Push Docker
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.MY_GITHUB_TOKEN || github.token }}
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular SSR
+        run: npm run build --omit=dev
+
+      - name: Precompress assets (.gz and .br)
+        run: |
+          npm install -g brotli-cli
+          find dist/*/browser -type f -name '*.js' -exec gzip -k {} \;
+          find dist/*/browser -type f -name '*.css' -exec gzip -k {} \;
+          find dist/*/browser -type f -name '*.html' -exec gzip -k {} \;
+          find dist/*/browser -type f -name '*.js' -exec brotli -Z {} \;
+          find dist/*/browser -type f -name '*.css' -exec brotli -Z {} \;
+
+      - name: Push Docker image
+        uses: Dahnepfl/actions/.github/actions/docker-push@main
+        with:
+          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          TAG: ${{ inputs.TAG }}
